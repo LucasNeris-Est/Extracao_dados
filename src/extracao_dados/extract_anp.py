@@ -30,7 +30,7 @@ def extract_anp(max_downloads=None):
                     hrefs.append(a_tag['href'])
 
     # Carregar hrefs já utilizados
-    hrefs_usados_path = 'hrefs_usados.txt'
+    hrefs_usados_path = '../../hrefs_usados.txt'
     hrefs_usados = set()
     try:
         with open(hrefs_usados_path, 'r', encoding='utf-8') as f:
@@ -41,7 +41,9 @@ def extract_anp(max_downloads=None):
 
     # Para cada href, baixar o arquivo xlsx ignorando as primeiras 9 (Se não encontrar, ignorar as primeiras 10) linhas e salvar em um dataframe
     # Pula hrefs já utilizados
-    csv_path = 'dados/anp_precos.csv'
+    if not os.path.exists('../../dados'):
+        os.makedirs('../../dados')
+    csv_path = '../../dados/anp_precos.csv'
     downloads = 0
     for href in hrefs:
         if href in hrefs_usados:

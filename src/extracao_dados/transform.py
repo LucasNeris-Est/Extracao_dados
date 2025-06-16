@@ -41,4 +41,4 @@ def transform_anp():
     dados = dados.astype(colunas_tipos)
 
     # Salvando em parquet
-    dados.to_parquet('dados/anp_precos_transformado.parquet')
+    dados.to_parquet('../../dados/anp_precos_transformado.parquet')

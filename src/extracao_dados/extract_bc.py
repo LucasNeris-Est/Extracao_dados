@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-import datetime
+import os
 
 def extract_bc(data_inicial, data_final):
     '''
@@ -20,6 +20,8 @@ def extract_bc(data_inicial, data_final):
     df_dolar['data'] = pd.to_datetime(df_dolar['data'], dayfirst=True)
     df_dolar['valor'] = df_dolar['valor'].astype(float)
 
+    if not os.path.exists('../../dados'):
+        os.makedirs('../../dados')
     # Salvando em parquet
-    df_dolar.to_parquet('dados/dolar.parquet')
+    df_dolar.to_parquet('../../dados/dolar.parquet')
 
