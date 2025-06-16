@@ -18,3 +18,10 @@ wheels/
 *.xlsb
 *.xlsm
 *.xlsb
+/dados/anp_precos.parquet
+/dados/anp_precos.csv
+/dados/anp_precos.xlsx
+/dados/anp_precos.xls
+/dados/anp_precos.xlsm
+/dados/anp_precos.xlsb
+/dados/anp_precos.xlsm

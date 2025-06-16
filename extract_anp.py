@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import io
 import time
+import os
 
 def extract_anp(max_downloads=None):
     '''
@@ -38,9 +39,9 @@ def extract_anp(max_downloads=None):
     except FileNotFoundError:
         pass
 
-    # Para cada href, baixar o arquivo xlsx ignorando as primeiras 9 linhas e salvar em um dataframe
-    # Agora, pula hrefs já utilizados
-    df_final = pd.DataFrame()
+    # Para cada href, baixar o arquivo xlsx ignorando as primeiras 9 (Se não encontrar, ignorar as primeiras 10) linhas e salvar em um dataframe
+    # Pula hrefs já utilizados
+    csv_path = 'dados/anp_precos.csv'
     downloads = 0
     for href in hrefs:
         if href in hrefs_usados:
@@ -53,7 +54,15 @@ def extract_anp(max_downloads=None):
             response = requests.get(href, verify=False)
             content = response.content
             df = pd.read_excel(io.BytesIO(content), skiprows=9)
-            df_final = pd.concat([df_final, df])
+            if df.columns[0] == 'Unnamed: 0':
+                df = pd.read_excel(io.BytesIO(content), skiprows=10)
+
+            # Salvar imediatamente no CSV
+            if not os.path.exists(csv_path):
+                df.to_csv(csv_path, index=False, mode='w', encoding='utf-8')
+            else:
+                df.to_csv(csv_path, index=False, mode='a', header=False, encoding='utf-8')
+
             # Salvar href como utilizado
             with open(hrefs_usados_path, 'a', encoding='utf-8') as f:
                 f.write(href + '\n')
@@ -61,8 +70,6 @@ def extract_anp(max_downloads=None):
         except Exception as e:
             print(f"Erro ao baixar o arquivo {href}: {e}")
             continue
-
-    df_final.to_parquet('dados/anp_precos.parquet')
 
 
 
