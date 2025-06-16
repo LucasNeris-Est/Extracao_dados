@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def transform():
+def transform_anp():
     '''
     Transforma os dados da ANP em um formato mais adequado para o modelo de machine learning.
     '''

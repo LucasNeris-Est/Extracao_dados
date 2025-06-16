@@ -11,4 +11,6 @@ dependencies = [
     "openpyxl",
     "pyarrow",
     "tqdm",
+    "matplotlib",
+    "seaborn",
 ]
